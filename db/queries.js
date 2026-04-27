@@ -45,6 +45,19 @@ const { ObjectId } = require('mongodb');
  */
 async function signupUser(db, userData) {
   // TODO: implement
+  async function signupUser({ name, email, passwordHash }) {
+  const db = await getDb();
+  const existing = await db.collection("users").findOne({ email });
+  if (existing) throw new Error("Email already registered");
+
+  const result = await db.collection("users").insertOne({
+    name,
+    email,
+    passwordHash,
+    createdAt: new Date(),
+  });
+  return result;
+}
   throw new Error('signupUser not implemented');
 }
 
