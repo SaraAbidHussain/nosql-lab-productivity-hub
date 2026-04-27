@@ -76,13 +76,9 @@ async function signupUser(db, userData) {
  *
  * Hint: findOne with an exact-match filter.
  */
-async function loginFindUser(db, email) {
-  // TODO: implement
-  async function loginFindUser(email) {
+async function loginFindUser(email) {
   const db = await getDb();
   return db.collection("users").findOne({ email });
-  }
-  throw new Error('loginFindUser not implemented');
 }
 
 /**
@@ -101,8 +97,11 @@ async function loginFindUser(db, email) {
  * Hint: find with two filter conditions, then .sort().toArray().
  */
 async function listUserProjects(db, ownerId) {
-  // TODO: implement
-  throw new Error('listUserProjects not implemented');
+  return db.collection('projects')
+  .find({ ownerId: ownerId, archived: false })
+  .sort({ createdAt: -1 })
+  .toArray();
+  //throw new Error('listUserProjects not implemented');
 }
 
 /**
