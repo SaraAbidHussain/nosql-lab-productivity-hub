@@ -232,6 +232,10 @@ return result;
  */
 async function updateTaskStatus(db, taskId, newStatus) {
   // TODO: implement
+  return db.collection('tasks').updateOne(
+  { _id: taskId },
+  { $set: { status: newStatus } }
+);
   throw new Error('updateTaskStatus not implemented');
 }
 
