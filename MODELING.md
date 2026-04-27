@@ -31,41 +31,45 @@ For each collection, write the document shape (field name + type + required/opti
 ### projects
 ```
 {
-  _id:         ObjectId  (required, auto-generated),
-  ownerId:     ObjectId  (required, ref → users),
-  name:        string    (required),
-  description: string    (optional),
-  archived:    boolean   (required, default: false),
-  createdAt:   Date      (required)
+  _id: ObjectId,
+  ownerId: ObjectId (required, → users._id),
+  name: string (required),
+  description: string (optional),
+  archived: boolean (required, default false),
+  createdAt: Date (required)
 }
 ```
 
 ### tasks
 ```
 {
-  _id:       ObjectId  (required, auto-generated),
-  ownerId:   ObjectId  (required, ref → users),
-  projectId: ObjectId  (required, ref → projects),
-  title:     string    (required),
-  status:    string    (required, one of: "todo" | "in-progress" | "done"),
-  priority:  number    (required, default: 1),
-  tags:      string[]  (required, default: []),
-  subtasks:  Array<{ title: string (required), done: boolean (required) }>  (required, default: []),
-  dueDate:   Date      (optional),
-  createdAt: Date      (required)
+  _id: ObjectId,
+  ownerId: ObjectId (required, → users._id),
+  projectId: ObjectId (required, → projects._id),
+  title: string (required),
+  status: string (required, enum: todo | in-progress | done),
+  priority: number (required, 1-5),
+  tags: string[] (required, may be empty),
+  subtasks: [
+    { title: string, done: boolean }
+  ] (required, may be empty),
+  description: string (optional),         // schema flexibility
+  dueDate: Date (optional),               // schema flexibility
+  createdAt: Date (required)
 }
 ```
 
 ### notes
 ```
 {
-  _id:       ObjectId  (required, auto-generated),
-  ownerId:   ObjectId  (required, ref → users),
-  projectId: ObjectId  (optional, ref → projects),
-  title:     string    (required),
-  content:   string    (required),
-  tags:      string[]  (required, default: []),
-  createdAt: Date      (required)
+  _id: ObjectId,
+  ownerId: ObjectId (required, → users._id),
+  projectId: ObjectId (optional, → projects._id),
+  title: string (required),
+  body: string (required),
+  tags: string[] (required, may be empty),
+  pinned: boolean (optional),             // schema flexibility — only on some
+  createdAt: Date (required)
 }
 ```
 

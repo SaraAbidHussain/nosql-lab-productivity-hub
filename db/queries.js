@@ -78,6 +78,10 @@ async function signupUser(db, userData) {
  */
 async function loginFindUser(db, email) {
   // TODO: implement
+  async function loginFindUser(email) {
+  const db = await getDb();
+  return db.collection("users").findOne({ email });
+  }
   throw new Error('loginFindUser not implemented');
 }
 
