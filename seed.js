@@ -38,7 +38,6 @@ async function seed() {
       email: "bob@example.com",
       passwordHash: password2,
       createdAt: new Date(),
-      // no theme field — demonstrates schema flexibility
     },
   ]);
 
