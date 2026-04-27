@@ -44,21 +44,13 @@ const { ObjectId } = require('mongodb');
  * Hint: insertOne. Nothing fancy.
  */
 async function signupUser(db, userData) {
-  // TODO: implement
-  async function signupUser({ name, email, passwordHash }) {
-  const db = await getDb();
-  const existing = await db.collection("users").findOne({ email });
-  if (existing) throw new Error("Email already registered");
-
-  const result = await db.collection("users").insertOne({
-    name,
-    email,
-    passwordHash,
+  const result = await db.collection('users').insertOne({
+    name: userData.name,
+    email: userData.email,
+    passwordHash: userData.passwordHash,
     createdAt: new Date(),
   });
   return result;
-}
-  throw new Error('signupUser not implemented');
 }
 
 /**
@@ -76,8 +68,7 @@ async function signupUser(db, userData) {
  *
  * Hint: findOne with an exact-match filter.
  */
-async function loginFindUser(email) {
-  const db = await getDb();
+async function loginFindUser(db, email) {
   return db.collection("users").findOne({ email });
 }
 
@@ -257,6 +248,10 @@ async function updateTaskStatus(db, taskId, newStatus) {
  */
 async function addTaskTag(db, taskId, tag) {
   // TODO: implement
+  return db.collection('tasks').updateOne(
+  { _id: taskId },
+  { $addToSet: { tags: tag } }
+);
   throw new Error('addTaskTag not implemented');
 }
 
